@@ -1,0 +1,20 @@
+.message {
+    margin-top: 5px;
+    color: white;
+    margin-bottom: 10px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    padding-left: 5px;
+    width: 100%;
+    background-color: #333;
+
+
+}
+
+.message.to {
+    grid-column-start: 3;
+}
+
+.messag.from {
+    grid-column-start: 1;
+}

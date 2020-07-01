@@ -1,0 +1,27 @@
+.chat {
+    color: black;
+    font-weight: 700;
+    display: block;
+    margin: 10px;
+
+
+}
+.chat.active {
+    color: gold;
+}
+.image {
+    padding-left: 5px;
+    width: 30px;
+    height: 30px;
+}
+.wrap {
+    text-decoration: none;
+    background-color: white;
+    align-items: center;
+    border: 1px solid #333;
+   display: flex;
+    align-content: center;
+    width: 100%;
+    margin: 10px;
+
+}

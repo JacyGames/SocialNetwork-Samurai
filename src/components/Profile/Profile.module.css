@@ -1,0 +1,39 @@
+.profile__conatiner {
+    position: relative;
+    color: #314f2d;
+    font-size: 14px;
+    display: flex;
+    flex-basis: 50%;
+}
+.profile__image {
+    padding: 10px;
+}
+.profile__image img {
+    border-radius: 5px;
+}
+.profile__info {
+    padding: 10px;
+}
+.profile__name {
+    font-weight: 600;
+    font-size: 25px;
+}
+.profile__status {
+    font-size: 15px;
+    color: #387410;
+}
+.profile__about {
+    width: 100%;
+    padding-top: 20px;
+    padding-left: 100px;
+}
+.profile__defaultInfo {
+    font-style: italic;
+}
+.profile__userInfo {
+    font-weight: bold;
+}
+.profile__about__info {
+    display: flex;
+    justify-content: space-between;
+}

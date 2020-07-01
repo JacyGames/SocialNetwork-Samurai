@@ -1,0 +1,36 @@
+.header {
+    grid-area: h;
+    background-color: #76b955 ;
+    position: relative;
+    border: #314f2d solid 3px;
+    border-radius: 5px;
+}
+.logoStyle {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.logoStyle img {
+    width: 65px;
+    border-radius: 10px;
+
+}
+.author {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 20px;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+}
+.currentUser {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 20px;
+    color: #314f2d;
+    font-weight: bold;
+}
+

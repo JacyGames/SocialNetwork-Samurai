@@ -1,0 +1,52 @@
+.user {
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 15px;
+
+}
+.ava {
+    text-align: center;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+.image {
+    width: 100px;
+    height: 100px;
+    display: block;
+}
+
+.btn {
+    background: white;
+    border: 1px #333 solid;
+    border-radius: 2px;
+    padding: 4px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.info {
+    display: flex;
+    position: relative;
+    width: 100%;
+    text-align: center;
+}
+.location {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-weight: 700;
+    color: #ffffff;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+.name {
+    font-weight: 700;
+    color: #ffffff;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.selected {
+    font-weight: 700;
+}
+.hoverment {
+    cursor: pointer;
+}
