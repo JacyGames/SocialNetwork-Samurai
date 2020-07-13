@@ -3,9 +3,6 @@
 
 
 let initialState = {
-
-    dialogArea: "type smth",
-
     wordsMessage: [
         {message: "Hello!"},
         {message: "Hello!12"},
@@ -28,19 +25,12 @@ let initialState = {
 let dialogsReducer = (store= initialState, action) => {
     switch (action.type) {
         case "SEND-MESSAGE":{
-            let message = {message: store.dialogArea};
-            return {...store,  wordsMessage: [...store.wordsMessage, message], dialogArea: ""};
+            let message = {message: action.message};
+            return {...store,  wordsMessage: [...store.wordsMessage, message]};
             break;
         }
-
-        case "MESSAGE-CHANGE": {
-            return {...store, dialogArea: action.text};
-            break;
-        }
-
         default: return store;
     }
 }
-export const sendMessageActionCreator = () => ({type: "SEND-MESSAGE"});
-export const changeMessageActionCreator = (text) => ({type: "MESSAGE-CHANGE", text: text});
+export const sendMessageActionCreator = (message) => ({type: "SEND-MESSAGE", message});
 export default dialogsReducer;

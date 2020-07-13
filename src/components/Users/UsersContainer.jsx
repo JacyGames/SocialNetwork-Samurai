@@ -14,6 +14,7 @@ import {
 } from "../../redux/usersReducer";
 import {withAuthRedirect} from "../../Hok/wihtAuthRedirect";
 import {compose} from "redux";
+import {getUsers} from "../../redux/selectors/Selector";
 
 
 
@@ -52,7 +53,7 @@ class UsersAPI extends React.Component {
 
 let mapStateToProps = (state) => {
     return {
-        users: state.users
+        users: getUsers(state)
     }
 }
 

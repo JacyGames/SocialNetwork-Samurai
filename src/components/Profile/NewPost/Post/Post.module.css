@@ -1,11 +1,12 @@
 .item {
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 700;
-    align-items: center;
-    align-content: center;
     display: flex;
-    margin: 20px 0;
+
+    padding: 10px;
+    margin: 10px 0;
     position: relative;
+
 }
 .image {
     width: 30px;
@@ -14,15 +15,24 @@
     margin: 0 0 0 30px;
 }
 .message {
-    align-content: center;
-    margin-left: 30px;
+    display: flex;
+    color: white;
+    padding-top: 2px;
+    padding-bottom: 5px;
 }
-
+.wraper {
+    background-color: #314f2d;
+    border-radius: 5px;
+    margin-left: 20px;
+    border: black 1px solid;
+    width: 400px;
+    min-height: 50px;
+}
 .likes {
     font-size: 13px;
     color: #ffffff;
     position: absolute;
     top: 85%;
-    right: 70%;
+    right: 20%;
 
 }

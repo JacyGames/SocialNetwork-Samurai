@@ -1,9 +1,9 @@
-import {DataAPI} from "../api/api";
+import {DataAPI, UsersAPI} from "../api/api";
 
 let initialState = {
     users: [],
     totalCount: 0,
-    itemsOnPage: 5,
+    itemsOnPage: 10,
     currentPage: 1,
     isFetching: true,
     isFollowing: []
@@ -77,7 +77,7 @@ export default userReducer;
 export const getUsersThunk = (currentPage, itemsOnPage) => {
     return (dispatch) => {
         dispatch(setFetching(true));
-        DataAPI.getUsers(currentPage,itemsOnPage).then(data => {
+        UsersAPI.getUsers(currentPage,itemsOnPage).then(data => {
             dispatch(setFetching(false));
             dispatch(setuser(data.items));
             dispatch(setTotal(data.totalCount));
@@ -88,7 +88,7 @@ export const getUsersAnotherPageThunk = (currentPage, itemsOnPage,pageNumber) =>
     return (dispatch) => {
         dispatch(curentPage(pageNumber))
         dispatch(setFetching(true));
-        DataAPI.getUsers(currentPage,itemsOnPage).then(data => {
+        UsersAPI.getUsers(currentPage,itemsOnPage).then(data => {
             dispatch(setFetching(false));
             dispatch(setuser(data.items));
             dispatch(setTotal(data.totalCount));
@@ -99,7 +99,7 @@ export const getUsersAnotherPageThunk = (currentPage, itemsOnPage,pageNumber) =>
 export const unfollowThunk = (userID) => {
     return (dispatch) => {
         dispatch(setIsFollowing(true, userID));
-        DataAPI.unfollowAPI(userID).then(data => {
+        UsersAPI.unfollowAPI(userID).then(data => {
 
             if (data.resultCode === 0) {
                 dispatch(unfollow(userID));
@@ -112,7 +112,7 @@ export const unfollowThunk = (userID) => {
 export const followThunk = (userID) => {
     return (dispatch) => {
         dispatch(setIsFollowing(true, userID));
-        DataAPI.followAPI(userID).then(data => {
+        UsersAPI.followAPI(userID).then(data => {
 
             if (data.resultCode === 0) {
                 dispatch(follow(userID));

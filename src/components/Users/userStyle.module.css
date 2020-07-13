@@ -44,9 +44,72 @@
     margin-top: 10px;
     margin-left: 10px;
 }
-.selected {
+.pages.selected {
+    background-color: #314f2d;
     font-weight: 700;
 }
 .hoverment {
     cursor: pointer;
+    max-width: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px auto;
+
+}
+.ava button {
+    background: #314f2d;
+    border: #314f2d 1px solid;
+    border-radius: 3px;
+    padding: 5px 25px;
+    font-size: 14px;
+    color: #ffffff;
+    font-weight: bold;
+    transition: all .3s linear;
+    margin-left: 20px;
+}
+
+.ava button:hover {
+    background-color: #ffffff;
+    color: #314f2d;
+    border-color: #ffffff;
+    transition: all .3s linear;
+}
+.buttonContainer {
+    display: flex;
+    align-items: center;
+    margin-left: -15px;
+}
+.pages {
+    border-radius: 5px;
+    color: #ffffff;
+    background-color: #76b955;
+    padding: 10px 8px;
+    border: 1px  #314f2d solid;
+    margin-left: 2px;
+    margin-bottom: 5px;
+}
+.btnPortions {
+    border-radius: 5px;
+    border: 1px #314f2d solid;
+    color: #ffffff;
+    background-color: #76b955;
+    padding: 10px 8px;
+    outline: none;
+    margin-left: 2px;
+
+}
+.btnPortions:hover {
+    transition: all .5s linear;
+    border: 1px #314f2d solid;
+    color: #ffffff;
+    background-color: #314f2d;
+
+}
+.pages:hover {
+    transition: all .5s linear;
+    border: 1px #314f2d solid;
+    color: #ffffff;
+    background-color: #314f2d;
+
 }

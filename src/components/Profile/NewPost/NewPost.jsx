@@ -1,30 +1,22 @@
 import React from "react";
 import classes from "./NewPost.module.css";
 import Post from "./Post/Post";
-import {addPostActionCreator, changeSymbolActionCreator} from "../../../redux/data";
+import AddNewPost from "../../Forms/ProfileAddPostForm";
 
 
-const NewPost = (props) => {
-    let inputElem = React.createRef();
+const NewPost = React.memo(props => {
 
-    let buttonClicker = function () {
-        props.buttonClick();
+    console.log("RENDER");
+
+    let addPost = function (value) {
+        props.addPostActionCreator(value.newpost);
     };
 
-    let areaChanger = () => {
-        let text = inputElem.current.value;
-        props.changeArea(text);
-    };
 
     return (
-        <div>
+        <div className={classes.postscontainer}>
 
-            My posts
-            <div>
-                New post
-                <input onChange={areaChanger} value={props.data.textAreaValue} ref={inputElem} type="text"/>
-                <button onClick={buttonClicker}>Submit</button>
-            </div>
+           <AddNewPost onSubmit={addPost}/>
             <div>
 
                 {props.data.data.map(ob => <Post message={ob.messages} count={ob.likesCount}/>)}
@@ -33,5 +25,5 @@ const NewPost = (props) => {
 
         </div>
     )
-}
+})
 export default NewPost;

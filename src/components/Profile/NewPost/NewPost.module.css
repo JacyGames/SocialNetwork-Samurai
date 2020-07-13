@@ -1,0 +1,7 @@
+.postscontainer {
+    border-left: #000 1px solid;
+    border-right: #000 1px solid;
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+}

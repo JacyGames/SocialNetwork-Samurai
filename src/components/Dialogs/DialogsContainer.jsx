@@ -2,30 +2,21 @@ import React from "react";
 import {changeMessageActionCreator, sendMessageActionCreator} from "../../redux/dialogsReducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
+import {getIsAutorized, getPageDialogData} from "../../redux/selectors/Selector";
 
 
 
 
 
 let mapStateToProps = (state) => {
-    return { DialogPage: state.PageDiaolog,
-            aurorized: state.auth.isAutorized
+    return { DialogPage: getPageDialogData(state),
+            aurorized: getIsAutorized(state)
     }
 };
 
-let mapDispatchToProps = (dispatch) => {
-   return {
-       sendMessage : () => {
-           dispatch(sendMessageActionCreator())
-       },
-       changeMessage: (text) => {
-           dispatch(changeMessageActionCreator(text))
-       }
-   }
-
-};
 
 
-const DiaolgsContainer = connect(mapStateToProps,mapDispatchToProps)(Dialogs);
+
+const DiaolgsContainer = connect(mapStateToProps, {sendMessageActionCreator})(Dialogs);
 
 export default  DiaolgsContainer;

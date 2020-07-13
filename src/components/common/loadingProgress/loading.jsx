@@ -1,11 +1,18 @@
 import React from "react";
-import load from "../../../images/load.svg"
-import classes from "./loadingStyles.module.css"
+import './loaderSyle.css'
 
 
 const Loader = () => {
-    return <div className={classes.loadcontainer}>
-        <img width="100px" src={load} alt=""/>
+    return <div className="loader_container">
+        <div className="lds-roller">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
     </div>
 }
 

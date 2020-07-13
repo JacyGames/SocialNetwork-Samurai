@@ -1,10 +1,10 @@
 import React from "react";
 import classes from "./Header.module.css";
 import Header from "./Header";
-import {autorize, AutorizedThunk} from "../../redux/autorReducer";
-import * as axios from "axios";
+import {autorize, AutorizedThunk, LogOut} from "../../redux/autorReducer";
 import {connect} from "react-redux";
-import {DataAPI} from "../../api/api";
+import {getAuthEmail, getAuthLogin, getIsAutorized, getIsFetching, getLoginedId} from "../../redux/selectors/Selector";
+
 
 
 class HeaderContainer extends React.Component {
@@ -19,12 +19,12 @@ class HeaderContainer extends React.Component {
 }
 
 let mapStateToProps = (state) => ({
-    isAutorized: state.auth.isAutorized,
-    id: state.auth.id,
-    login: state.auth.login,
-    email: state.auth.email,
-    isFetching: state.auth.isFetching
+    isAutorized: getIsAutorized(state),
+    id: getLoginedId(state),
+    login: getAuthLogin(state),
+    email: getAuthEmail(state),
+    isFetching: getIsFetching(state)
 });
 
 
-export default connect(mapStateToProps, {AutorizedThunk})(HeaderContainer);
+export default connect(mapStateToProps, {AutorizedThunk, LogOut})(HeaderContainer);

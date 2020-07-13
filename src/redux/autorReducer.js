@@ -1,5 +1,7 @@
-import {DataAPI} from "../api/api";
-
+import {AuthApi, DataAPI} from "../api/api";
+import {stopSubmit} from "redux-form"
+import {Redirect} from "react-router-dom";
+import React from "react";
 
 let initaialState = {
     isAutorized: false,
@@ -32,9 +34,31 @@ export default autorizeReducer;
 
 export const AutorizedThunk = () => {
     return (dispatch) => {
-        DataAPI.getAutorized().then(data => {
+        return AuthApi.getAutorized().then(data => {
         let someData = data.data;
-            dispatch(autorize(someData.id, someData.login, someData.email));
+         dispatch(autorize(someData.id, someData.login, someData.email));
     })}
 
-}
+};
+export const LogIn = (email,password,rememberMe=false) => {
+    return (dispatch) => {
+        AuthApi.login(email,password,rememberMe).then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(AutorizedThunk());
+                return <Redirect to="/Profile"/>
+            }else {
+                dispatch(stopSubmit( "loginform", {_error: response.data.messages} ));
+            }
+        })}
+
+};
+
+export const LogOut = () => {
+    return (dispatch) => {
+        AuthApi.logout().then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(AutorizedThunk());
+            }
+        })}
+
+};

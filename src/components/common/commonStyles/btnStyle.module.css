@@ -1,0 +1,43 @@
+.btn {
+    background: #314f2d;
+    border: #314f2d 1px solid;
+    border-radius: 3px;
+    padding: 5px 10px;
+    font-size: 14px;
+    color: #ffffff;
+    font-weight: bold;
+    transition: all .3s linear;
+    margin-left: 20px;
+}
+.btn:hover {
+    background-color: #ffffff;
+    color: #314f2d;
+    border-color: #ffffff;
+    transition: all .3s linear;
+
+}
+.textarea {
+    width: 400px;
+    background-color: white;
+    color: #314f2d;
+    font-size: 14px;
+}
+.textarea:focus {
+    outline: none;
+    border-color: #314f2d;
+    box-shadow: 0 0 10px #314f2d;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.error {
+    color: red;
+}
+
+.forMessageFrom {
+    margin-top: 50px;
+    margin-right: -750px;
+}
