@@ -1,14 +1,11 @@
 import React from 'react';
 import './App.css';
-import Header from "./components/Header/Header";
 import Nav from "./components/Navbar/Navbar";
-import Profile from "./components/Profile/Profile";
-import {BrowserRouter, Route, withRouter} from "react-router-dom";
+import {BrowserRouter, Redirect, Route, Switch, withRouter} from "react-router-dom";
 import Music from "./components/Music/Music";
 import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
-import Users from "./components/Users/Users";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
@@ -26,17 +23,19 @@ class App extends React.Component {
     }
 
     render() {
-        if(!this.props.initialized) {
-            return <Loader />
-        }
+        // if (!this.props.initialized) {
+        //     return <Loader/>
+        // }
 
         return (
 
-                <div className='app-wrapper'>
-                    <HeaderContainer/>
-                    <Nav/>
+            <div className='app-wrapper'>
+                <HeaderContainer/>
+                <Nav/>
 
-                    <div className="app__wrapper__contern">
+                <div className="app__wrapper__contern">
+                    <Switch>
+                        <Route exact path={"/"} render={() => <Redirect to={"/Profile"} />} />
                         <Route path="/Dialogs" render={() => <DialogsContainer/>}/>
                         <Route path="/Profile/:userId?" render={() => <ProfileContainer/>}/>
                         <Route path="/Users" render={() => <UsersContainer/>}/>
@@ -44,11 +43,12 @@ class App extends React.Component {
                         <Route path="/News" component={News}/>
                         <Route path="/Settings" component={Settings}/>
                         <Route path="/Login" render={() => <Login/>}/>
-                    </div>
-
-
+                    </Switch>
                 </div>
-            );
+
+
+            </div>
+        );
     }
 }
 
@@ -58,5 +58,5 @@ let mapDispathToProps = (state) => ({
 
 export default compose(
     withRouter,
-    connect(mapDispathToProps,{initalizedThunk})
+    connect(mapDispathToProps, {initalizedThunk})
 )(App);

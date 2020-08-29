@@ -1,0 +1,66 @@
+import React from "react";
+import classes from "./userStyle.module.css"
+import userImg from "../../images/user.png";
+import {NavLink} from "react-router-dom";
+import {Paginator} from "../common/paginator/Paginator";
+
+type UsersType = {
+    users: any
+    pageChanged: any
+    isFollowing: any
+    unfollowThunk: any
+    followThunk: any
+    totalCount: number
+    itemsOnPage: number
+    currentPage: number
+    follow: any
+    unfollow: any
+    setIsFollowing: any
+
+}
+
+const Users: React.FC<UsersType> = (props) => {
+    let key = 0;
+    return <div>
+
+        <Paginator totalCount={props.users.totalCount} itemsOnPage={props.users.itemsOnPage}
+                   currentPage={props.users.currentPage} pageChanged={props.pageChanged} portionLength={20}/>
+
+        {
+
+            props.users.users.map((u: any) => <div key={key++} className={classes.user}>
+                <div className={classes.ava}>
+                    <NavLink to={'/Profile/' + u.id}> <img className={classes.image}
+                                                           src={u.photos.small != null ? u.photos.small : userImg}
+                                                           alt=""/> </NavLink>
+                    <div className={classes.buttonContainer}>
+                        {u.followed ? <button disabled={props.isFollowing.some((id: number) => id === u.id)} onClick={() => {
+                                props.unfollowThunk(u.id)
+
+
+                            }} className={classes.btn} type="button">Unfollow</button> :
+                            <button disabled={props.isFollowing.some((id: number) => id === u.id)} onClick={() => {
+                                props.followThunk(u.id)
+
+
+                            }} className={classes.btn} type="button">Follow</button>}
+
+                    </div>
+                </div>
+                <div className={classes.info}>
+                    <div className={classes.name}>
+                        <div>{u.name}</div>
+                        <div>{u.status}</div>
+                    </div>
+                    <div className={classes.location}>
+                        <div>{"u.location.country"}</div>
+                        <div>{"u.location.city"}</div>
+                    </div>
+                </div>
+
+            </div>)}
+    </div>
+}
+
+
+export default Users;

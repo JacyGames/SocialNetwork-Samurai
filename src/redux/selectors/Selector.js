@@ -30,3 +30,13 @@ export const getIsFetching = (state) => {
 export const getPageDialogData = (state) => {
     return state.PageDiaolog
 }
+export const getPageProfileEditMode = (state) => {
+    return state.PageProfile.editMode
+}
+export const getPageProfiIsFetching = (state) => {
+    return state.PageProfile.isFetchingProfile
+}
+export const getIsStatusUpdating = (state) => {
+    return state.PageProfile.updatingStatus
+}
+

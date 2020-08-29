@@ -6,6 +6,7 @@
     flex-basis: 50%;
 }
 .profile__image {
+    position: relative;
     padding: 10px;
 }
 .profile__image img {
@@ -44,6 +45,27 @@
     border: 1px solid #314f2d;
     border-radius: 5px;
     margin-left: 5px;
+    transition: all .2s linear;
+}
+
+.buttonSubmit:hover {
+    color: #76b955;
+    background-color: #ffffff;
+    transition: all .2s linear;
+}
+
+.buttonCancel {
+    transition: all .2s linear;
+    color: #ffffff;
+    background-color: red;
+    border: 1px solid #741517;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+.buttonCancel:hover {
+    color: red;
+    background-color: #ffffff;
+    transition: all .2s linear;
 }
 
 .input {
@@ -53,5 +75,18 @@
     border: 2px solid #314f2d;
     border-radius: 5px;
     padding: 3px;
+    width: 100%;
 
+}
+.inputFile {
+    position: absolute;
+    right: 5px;
+    top: 15px;
+    width: 200px;
+    opacity: 0;
+    transition: opacity .4s linear;
+}
+.inputFile:hover {
+    transition: opacity .4s linear;
+    opacity: 1;
 }

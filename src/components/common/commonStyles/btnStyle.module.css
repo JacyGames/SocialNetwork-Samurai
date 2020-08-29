@@ -41,3 +41,17 @@
     margin-top: 50px;
     margin-right: -750px;
 }
+
+.buttonCancel {
+    transition: all .2s linear;
+    color: #ffffff;
+    background-color: red;
+    border: 1px solid #741517;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+.buttonCancel:hover {
+    color: red;
+    background-color: #ffffff;
+    transition: all .2s linear;
+}
