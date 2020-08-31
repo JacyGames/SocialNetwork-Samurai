@@ -1,20 +1,19 @@
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import React from "react";
 import {Inputmine} from "../common/CustomHTML/ValidateInput";
 import {maxlenght, required} from "../common/validation/validator";
 import classes from "./ProfileAddPostForm.module.css"
+import {SubmittingPropsType} from "../Login/Login";
 
 
 type PropsType = {
-    handleSubmit: () => void
-    error: string
     captchaUrl: string | null
 
 }
 
 let maxLength = maxlenght(30);
 
-let LoginForm: React.FC<PropsType> = (props) => {
+let LoginForm: React.FC<PropsType & InjectedFormProps<SubmittingPropsType, PropsType>> = (props) => {
 
     return <div>
         <form onSubmit={props.handleSubmit}>
@@ -37,7 +36,7 @@ let LoginForm: React.FC<PropsType> = (props) => {
         </form>
     </div>
 };
-const LoginFormRedux = reduxForm<{}, PropsType>({
+const LoginFormRedux = reduxForm<SubmittingPropsType, PropsType>({
     form: "loginform"
 })(LoginForm);
 

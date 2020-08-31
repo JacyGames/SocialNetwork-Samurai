@@ -1,5 +1,7 @@
 import {reset} from "redux-form";
 import {SEND_MESSAGE} from "./constants"
+import {ThunkAction} from "redux-thunk";
+import {StateType} from "./reduxStore";
 
 export type MessageObjType = {
     message: string
@@ -32,12 +34,14 @@ let initialState: initialType = {
     ]
 
 };
-type ActionType = {
+type MessageActionType = {
     type: typeof SEND_MESSAGE
     message: string
 }
 
-let dialogsReducer = (store= initialState, action: ActionType): initialType => {
+type MainActionType = MessageActionType;
+
+let dialogsReducer = (store= initialState, action: MainActionType): initialType => {
     switch (action.type) {
         case SEND_MESSAGE:{
             let message = {message: action.message};
@@ -46,10 +50,10 @@ let dialogsReducer = (store= initialState, action: ActionType): initialType => {
         default: return store;
     }
 }
-export const sendMessageActionCreator = (message: string) => ({type: SEND_MESSAGE, message});
+export const sendMessageActionCreator = (message: string): MessageActionType => ({type: SEND_MESSAGE, message});
 
-export const clearMessageFrom = () => {
-    return (dispatch: any) => {
+export const clearMessageFrom = (): ThunkAction<void, StateType, unknown, any> => {
+    return (dispatch) => {
         dispatch(reset('message'));
     }
 };

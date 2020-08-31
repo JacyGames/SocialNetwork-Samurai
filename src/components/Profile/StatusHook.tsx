@@ -3,7 +3,7 @@ import classes from './Profile.module.css'
 import MiniFetchingLoader from "../common/loadingProgress/miniFetchingLoader";
 
 type HookType = {
-    status: string
+    status: string | null
     updateProfileStatus: any
     updatingStatus: boolean
 
@@ -43,7 +43,7 @@ const ProfileStatusHook: React.FC<HookType> = (props) => {
 
     return <div>
         { props.updatingStatus ? <MiniFetchingLoader /> : editMode ?
-            <div> <input onKeyDown={onEnterKey} className={classes.input} value={status} onChange={inputChange} autoFocus={true}/>
+            <div> <input onKeyDown={onEnterKey} className={classes.input} value={!status ? '' : status} onChange={inputChange} autoFocus={true}/>
                     <button className={classes.buttonSubmit} onClick={deactivateEditMode}>
                         Submit
                     </button>

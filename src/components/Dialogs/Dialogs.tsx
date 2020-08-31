@@ -30,7 +30,7 @@ const Dialogs: React.FC<PropsType> = (props) => {
         <div className={classes.messages}>
             {props.DialogPage.wordsMessage.map( mes => <Message key={key++} message={mes.message}/>)}
 
-            <MessageTypeFrom handleSubmit={() => {}} onSubmit={SendMessage}/>
+            <MessageTypeFrom onSubmit={SendMessage}/>
         </div>
     </div>
 

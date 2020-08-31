@@ -3,7 +3,7 @@ import Profile from "./Profile";
 import {connect} from "react-redux";
 import {
     getProfileStatus,
-    getProfileThunk, ProfileType, setEditMode, updateProfileInfo,
+    getProfileThunk, ProfileType, ProfileActions, updateProfileInfo,
     updateProfileStatus,
     uploadProfilePhotoThunk
 } from "../../redux/profileReducer";
@@ -20,10 +20,10 @@ import {
 import {StateType} from "../../redux/reduxStore";
 
 type MapStateType = {
-    profile: ProfileType
+    profile: ProfileType | null
     auth: boolean
-    status: string
-    loginedId: number
+    status: string | null
+    loginedId: number | null
     editMode: boolean
     isFetchingProfile: boolean
     updatingStatus: boolean
@@ -96,7 +96,7 @@ let mapStateToProps = (state: StateType): MapStateType => ({
 });
 
 
-
+const setEditModeForConnect = ProfileActions.setEditMode;
 
 
 export default compose(
@@ -105,7 +105,7 @@ export default compose(
         getProfileStatus,
         updateProfileStatus,
         uploadProfilePhotoThunk,
-        setEditMode,
+        setEditModeForConnect,
         updateProfileInfo
     }),
     withRouter,

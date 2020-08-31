@@ -6,16 +6,17 @@ import AltProfilePic from "../../images/profilePic.jpg"
 import ProfileStatusHook from "./StatusHook";
 import {ProfileAbout, ProfileLinks} from "./ProfileAbout";
 import FetchingInProgress from "../common/loadingProgress/fetchingLoader";
-import ProfileChangeInfoFormWithProps from "../Forms/ProfileChangeInfoForm";
+import ProfileChangeInfoFormWithProps, {PropsInfoChangeType, PropsSubmitProfile} from "../Forms/ProfileChangeInfoForm";
 import {ProfileType} from "../../redux/profileReducer";
+import {FormSubmitHandler} from "redux-form";
 
 type PropsProfileType = {
-    profile: ProfileType
+    profile: ProfileType | null
     uploadProfilePhotoThunk: any
     isProfileOwner: boolean
     editMode: boolean
     updatingStatus: boolean
-    status: string
+    status: string | null
     updateProfileStatus: any
     isFetchingProfile: boolean
     setEditMode: any
@@ -104,16 +105,17 @@ type ProfileChangeType = {
     setEditMode: any
 
 }
+type SubmitHandler = FormSubmitHandler<PropsSubmitProfile, PropsInfoChangeType>
 
 const ProfileChangeInformation: React.FC<ProfileChangeType> = ({profile, updateProfileInfo}) => {
 
-    const submiting = (object: any) => {
+    const submiting: SubmitHandler = (object: any) => {
         updateProfileInfo(object);
     }
 
     return <div>
 
-        <ProfileChangeInfoFormWithProps handleSubmit={() => {}} error={"slkdjf"} initialValues={profile} onSubmit={submiting}/>
+        <ProfileChangeInfoFormWithProps initialValues={profile} onSubmit={submiting}/>
 
     </div>
 }

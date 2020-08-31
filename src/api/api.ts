@@ -1,5 +1,6 @@
 import  axios from "axios";
 import {ProfileType} from "../redux/profileReducer";
+import {UserType} from "../redux/usersReducer";
 
 const instance = axios.create({
     withCredentials: true,
@@ -8,60 +9,98 @@ const instance = axios.create({
         "API-KEY": "919f4290-8df1-4c27-b14f-53987648839c"
     }
 })
+export enum ResultCodeMessage {
+    Success = 0,
+    Error = 1
+}
+export enum ResultCodeCaptcha {
+    CaptchaRequired = 10
+}
+
+type GetUsersType = {
+    items: Array<UserType>
+    totalCount: number
+    error: string
+}
+type MainResponse = {
+    resultCode: ResultCodeMessage
+    messages: Array<string>
+    data: {}
+}
 
 
 export const UsersAPI = {
     getUsers(currentPage: number, itemsOnPage: number) {
-        return instance.get(`users?page=${currentPage}&count=${itemsOnPage}`)
+        return instance.get<GetUsersType>(`users?page=${currentPage}&count=${itemsOnPage}`)
             .then(response => response.data) ;
     },
     followAPI(id: number) {
-        return  instance.post(`follow/${id}`).then(response => response.data);
+        return  instance.post<MainResponse>(`follow/${id}`).then(response => response.data);
     },
     unfollowAPI(id: number) {
-        return instance.delete(`follow/${id}`).then(response => response.data);
+        return instance.delete<MainResponse>(`follow/${id}`).then(response => response.data);
     }
 }
 
+type UploadPhotoType = {
+    data: {small: string, large: string}
+    resultCode: ResultCodeMessage
+    messages: Array<string>
+}
+
 export const ProfileAPI = {
-    getProfile(userId: number) {
-        return instance.get(`profile/${userId}`).then(response => response.data);
+    getProfile(userId: number | null) {
+        return instance.get<ProfileType>(`profile/${userId}`).then(response => response.data);
     },
     getProfileStatus(userId: number){
-        return instance.get(`profile/status/${userId}`).then(response => response.data);
+        return instance.get<string>(`profile/status/${userId}`).then(response => response.data);
     },
     updateProfileStatus(status: string) {
-        return instance.put(`profile/status`, {status});
+        return instance.put<MainResponse>(`profile/status`, {status}).then(response => response.data);
     },
     uploadPhoto(photo: any) {
         let imageFile = new FormData();
         imageFile.append("image", photo);
-        return instance.put(`profile/photo`, imageFile, {
+        return instance.put<UploadPhotoType>(`profile/photo`, imageFile, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         }).then(response => response.data);
     },
     updateInfo(info: ProfileType) {
-        return instance.put(`profile`, info).then(response => response.data)
+        return instance.put<MainResponse>(`profile`, info).then(response => response.data)
     }
 }
 
+type AuthMeType = {
+    data: {id: number, email: string, login: string}
+    resultCode: ResultCodeMessage
+    messages: Array<string>
+}
+type LoginizationType = {
+    resultCode: ResultCodeMessage | ResultCodeCaptcha
+    messages: Array<string>
+    data: {}
+}
 
 export const AuthApi = {
     getAuthorized() {
-        return instance.get(`auth/me`).then(response => response.data);
+        return instance.get<AuthMeType>(`auth/me`).then(response => response.data);
     },
     login(email: string, password: string, rememberMe = false, captcha: boolean | null) {
-        return instance.post(`auth/login`, {email, password, rememberMe, captcha});
+        return instance.post<LoginizationType>(`auth/login`, {email, password, rememberMe, captcha});
     },
     logout() {
-        return instance.delete(`auth/login`);
+        return instance.delete<MainResponse>(`auth/login`);
     }
+}
+
+type SecureType = {
+    url: string
 }
 export const SecureApi = {
     getGaptcha() {
-        return instance.get(`security/get-captcha-url`).then(response => response.data);
+        return instance.get<SecureType>(`security/get-captcha-url`).then(response => response.data);
     }
 
 }

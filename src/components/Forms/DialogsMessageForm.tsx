@@ -1,17 +1,19 @@
 import React from "react";
-import { Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {TextArea} from "../common/CustomHTML/ValidateInput";
 import {maxlenght} from "../common/validation/validator";
 import classes from "./ProfileAddPostForm.module.css";
 
 type PropsType = {
-    handleSubmit: () => void
 
+}
+export type SubmitDialogType = {
+    message: string
 }
 
 let maxLength = maxlenght(100);
 
-let MessageTypeFrom: React.FC<PropsType> = (props) => {
+let MessageTypeFrom: React.FC<PropsType & InjectedFormProps<SubmitDialogType, PropsType>> = (props) => {
 
     let referral: React.RefObject<any> = React.createRef();
 
@@ -31,7 +33,7 @@ let MessageTypeFrom: React.FC<PropsType> = (props) => {
 
     )
 }
-const MessageTypeFromRedux = reduxForm<{}, PropsType>({form: "message"})(MessageTypeFrom);
+const MessageTypeFromRedux = reduxForm<SubmitDialogType, PropsType>({form: "message"})(MessageTypeFrom);
 
 
 export default MessageTypeFromRedux;

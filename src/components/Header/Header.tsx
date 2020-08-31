@@ -6,7 +6,7 @@ import classes2 from "../Forms/ProfileAddPostForm.module.css"
 
 type PropsType = {
     isAutorized: boolean
-    login: string
+    login: string | null
     LogOut: () => void
 }
 

@@ -3,14 +3,10 @@ import {connect} from "react-redux";
 import Users from "./Users";
 import Loader from "../common/loadingProgress/loading";
 import {
-    currentPageAC,
-    follow, followThunk, getUsersAnotherPageThunk,
+    UsersActions,
+    followThunk, getUsersAnotherPageThunk,
     getUsersThunk,
-    setFetching,
-    setIsFollowing,
-    setTotal,
-    setUser,
-    unfollow, unfollowThunk, UserType
+    unfollowThunk
 } from "../../redux/usersReducer";
 import {withAuthRedirect} from "../../Hok/wihtAuthRedirect";
 import {compose} from "redux";
@@ -76,10 +72,19 @@ let mapStateToProps = (state: StateType): MapStateType => {
     }
 }
 
+const followAC = UsersActions.follow;
+const unfollowAC = UsersActions.unfollow;
+const setUserAC = UsersActions.setUser;
+const setTotalAC = UsersActions.setTotal;
+const currentPageAC = UsersActions.currentPageAC;
+const setFetchingAC = UsersActions.setFetching;
+const setIsFollowingAC = UsersActions.setIsFollowing;
+
+
 
 
 export default compose(
-    connect(mapStateToProps, {follow, unfollow, setuser: setUser, setTotal, curentPage: currentPageAC, setFetching, setIsFollowing,getUsersThunk,getUsersAnotherPageThunk,
+    connect(mapStateToProps, {followAC, unfollowAC, setuser: setUserAC, setTotalAC, curentPage: currentPageAC, setFetchingAC, setIsFollowingAC,getUsersThunk,getUsersAnotherPageThunk,
         unfollowThunk, followThunk}),
     withAuthRedirect
 )(UsersAPI);

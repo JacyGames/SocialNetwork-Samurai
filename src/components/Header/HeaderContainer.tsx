@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./Header.module.css";
 import Header from "./Header";
-import {autorize, AutorizedThunk, LogOut} from "../../redux/autorReducer";
+import {AutorizedThunk, LogOut} from "../../redux/autorReducer";
 import {connect} from "react-redux";
 import {getAuthEmail, getAuthLogin, getIsAutorized, getIsFetching, getLoginedId} from "../../redux/selectors/Selector";
 import {StateType} from "../../redux/reduxStore";
@@ -11,9 +11,9 @@ type PropsTypeOwn = {
 }
 type MapStateType = {
     isAutorized: boolean,
-    id: number,
-    login: string,
-    email: string,
+    id: number | null,
+    login: string | null,
+    email: string | null,
     isFetching: boolean
 }
 type MapDispatchType = {

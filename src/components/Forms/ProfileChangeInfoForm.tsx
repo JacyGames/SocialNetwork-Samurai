@@ -1,14 +1,17 @@
 import React from "react";
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Inputmine} from "../common/CustomHTML/ValidateInput";
 import Error from "../common/errors/Error";
+import {ProfileType} from "../../redux/profileReducer";
 
-type PropsType = {
-    handleSubmit: () => void
-    error: string
+export type PropsInfoChangeType = {
+    initialValues: ProfileType
+}
+export type PropsSubmitProfile = {
+    object: ProfileType
 }
 
-const ProfileChangeInfoForm: React.FC<PropsType> = (props) => {
+const ProfileChangeInfoForm: React.FC<PropsInfoChangeType & InjectedFormProps<PropsSubmitProfile, PropsInfoChangeType>> = (props) => {
 
     return <div>
         <form onSubmit={props.handleSubmit}>
@@ -44,6 +47,6 @@ const ProfileChangeInfoForm: React.FC<PropsType> = (props) => {
 
     </div>
 }
-const ProfileChangeInfoFormWithProps = reduxForm<{}, PropsType>({form: "profileInfoForm"})(ProfileChangeInfoForm);
+const ProfileChangeInfoFormWithProps = reduxForm<PropsSubmitProfile, PropsInfoChangeType>({form: "profileInfoForm"})(ProfileChangeInfoForm);
 export default ProfileChangeInfoFormWithProps;
 

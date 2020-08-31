@@ -1,5 +1,5 @@
 import React from "react";
-import {addPostActionCreator, changeSymbolActionCreator, clearFrom} from "../../../redux/profileReducer";
+import {addPostForEnv, clearFrom} from "../../../redux/profileReducer";
 import NewPost from "./NewPost";
 import {connect} from "react-redux";
 import {getPageProfileData} from "../../../redux/selectors/Selector";
@@ -15,5 +15,5 @@ let mapStateToProps = (state) => {
 
 
 
-const NewPostContainer = connect(mapStateToProps,{addPostActionCreator, clearFrom})(NewPost);
+const NewPostContainer = connect(mapStateToProps,{addPostForEnv, clearFrom})(NewPost);
 export default NewPostContainer;

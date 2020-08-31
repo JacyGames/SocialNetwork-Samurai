@@ -18,15 +18,22 @@ type MapDispatchType = {
     LogIn: any
 }
 
+export type SubmittingPropsType = {
+    login: string
+    password: string
+    rememberMe: boolean
+    captcha: string | null
+}
+
 const Login: React.FC<PropsTypeOwn & MapStateType & MapDispatchType> = (props) => {
-    let LogData = (compareData: any) => {
+    let LogData = (compareData: SubmittingPropsType) => {
        props.LogIn(compareData.login, compareData.password, compareData.rememberMe, compareData.captcha);
 
     }
     return <div className={classes.formbackground}>
         <div className={classes.form}>
             <h1>Login</h1>
-            <LoginForm handleSubmit={() => {}} error={"eroor"} captchaUrl={props.captchaUrl} onSubmit={LogData}/>
+            <LoginForm captchaUrl={props.captchaUrl} onSubmit={LogData}/>
         </div>
     </div>
 }

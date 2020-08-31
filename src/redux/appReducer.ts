@@ -1,5 +1,7 @@
 import {AutorizedThunk} from "./autorReducer";
 import {IS_INITIALIZED} from "./constants";
+import {ThunkAction} from "redux-thunk";
+import {StateType} from "./reduxStore";
 
 
 
@@ -8,9 +10,11 @@ let initialState = {
 }
 type initialType = typeof initialState;
 
-type actionType = {
+type initType = {
     type: typeof IS_INITIALIZED
 }
+
+type actionType = initType
 
 export const appReducer = (state = initialState, action: actionType): initialType => {
     switch (action.type) {
@@ -29,7 +33,7 @@ export const appReducer = (state = initialState, action: actionType): initialTyp
 
 export const initialized = (): actionType => ({type: IS_INITIALIZED});
 
-export const initalizedThunk = (): any => (dispatch: any): void => {
+export const initalizedThunk = (): ThunkAction<void, StateType, unknown, actionType> => (dispatch) => {
     dispatch(AutorizedThunk()).then(() => {
         dispatch(initialized());
     })

@@ -1,14 +1,18 @@
-import {ProfileAPI} from "../api/api";
+import {ProfileAPI, ResultCodeMessage} from "../api/api";
 import {stopSubmit} from "redux-form";
 import {reset} from "redux-form";
-import {UPDATE_PHOTO,
+import {
+    UPDATE_PHOTO,
     SET_EDIT_MODE,
     SET_FETCHING,
     SET_IS_STATUS_UPDATING,
     GET_PROFILE,
     DELETE_POST,
     SET_PROFILE_STATUS,
-    ADD_POST} from "./constants"
+    ADD_POST
+} from "./constants"
+import {ThunkAction} from "redux-thunk";
+import {StateType, TypesFromObj} from "./reduxStore";
 
 
 type DataType = {
@@ -65,130 +69,106 @@ let initialState: InitialStateType = {
     updatingStatus: false
 };
 
+type MainActionType = TypesFromObj<typeof ProfileActions>
 
-let profileReducer = (state = initialState,action: any): InitialStateType => {
+let profileReducer = (state = initialState, action: MainActionType): InitialStateType => {
     switch (action.type) {
-        case ADD_POST:
-        {
- 
-            return { ...state, data: [...state.data,
-                    { id: 6,
-                    messages: action.newPost,
-                    likesCount: 0}
-                    ]};
+        case ADD_POST: {
+
+            return {
+                ...state, data: [...state.data,
+                    {
+                        id: 6,
+                        messages: action.newPost,
+                        likesCount: 0
+                    }
+                ]
+            };
         }
-        case SET_PROFILE_STATUS:{
+        case SET_PROFILE_STATUS: {
             return {...state, status: action.status};
         }
-        case GET_PROFILE:{
+        case GET_PROFILE: {
             return {...state, profile: action.profile};
         }
-        case UPDATE_PHOTO:{
-            return {...state, profile: {...state.profile, photos: {small: action.photo, large: action.photo}} as ProfileType };
+        case UPDATE_PHOTO: {
+            return {
+                ...state,
+                profile: {...state.profile, photos: {small: action.photo, large: action.photo}} as ProfileType
+            };
         }
-        case SET_EDIT_MODE:{
-            return {...state, editMode: action.editMode };
+        case SET_EDIT_MODE: {
+            return {...state, editMode: action.editMode};
         }
-        case SET_FETCHING:{
-            return {...state, isFetchingProfile: action.isFetching };
+        case SET_FETCHING: {
+            return {...state, isFetchingProfile: action.isFetching};
         }
-        case SET_IS_STATUS_UPDATING:{
-            return {...state, updatingStatus: action.isUpdating };
+        case SET_IS_STATUS_UPDATING: {
+            return {...state, updatingStatus: action.isUpdating};
         }
-        case DELETE_POST:{
+        case DELETE_POST: {
             return {...state, data: state.data.filter(post => post.id !== action.id)};
         }
 
-        default: return state;
+        default:
+            return state;
     }
 }
 
-type AddPostAction = {
-    type: typeof ADD_POST
-    newPost: string
+export const ProfileActions = {
+    addPostActionCreator: (newPost: string) => ({type: ADD_POST, newPost} as const),
+    getProfile: (profile: ProfileType) => ({type: GET_PROFILE, profile} as const),
+    setProfileStatus: (status: string) => ({type: SET_PROFILE_STATUS, status} as const),
+    deletePost: (id: number) => ({type: DELETE_POST, id} as const),
+    updateProfilePhoto: (photo: any) => ({type: UPDATE_PHOTO, photo} as const),
+    setEditMode: (editMode: boolean) => ({type: SET_EDIT_MODE, editMode} as const),
+    setIsFetching: (isFetching: boolean) => ({type: SET_FETCHING, isFetching} as const),
+    setIsStatusUpdating: (isUpdating: boolean) => ({type: SET_IS_STATUS_UPDATING,isUpdating} as const)
 }
-export const addPostActionCreator = (newPost: string): AddPostAction => ({type: ADD_POST, newPost});
+export const addPostForEnv = ProfileActions.addPostActionCreator;
 
-type GetProfileAction = {
-    type: typeof GET_PROFILE
-    profile: ProfileType
-}
-export const getProfile = (profile: ProfileType): GetProfileAction => ({type: GET_PROFILE, profile});
 
-type SetProfileAction = {
-    type: typeof SET_PROFILE_STATUS
-    status: string
-}
-export const setProfileStatus = (status: string): SetProfileAction => ({type: SET_PROFILE_STATUS, status});
+type ThunkActionType = ThunkAction<void, StateType, unknown, MainActionType>;
 
-type DeletePostAction = {
-    type: typeof DELETE_POST
-    id: number
-}
-export const deletePost = (id: number): DeletePostAction => ({type: DELETE_POST, id});
 
-type UpdateProfilePhotoAction = {
-    type: typeof UPDATE_PHOTO
-    photo: any
-}
-export const updateProfilePhoto = (photo: any): UpdateProfilePhotoAction => ({type: UPDATE_PHOTO, photo});
-
-type SetEditModeAction = {
-    type: typeof SET_EDIT_MODE
-    editMode: boolean
-}
-export const setEditMode = (editMode: boolean): SetEditModeAction => ({type: SET_EDIT_MODE, editMode});
-
-type SetIsFetchingAction = {
-    type: typeof SET_FETCHING
-    isFetching: boolean
-}
-export const setIsFetching = (isFetching: boolean): SetIsFetchingAction => ({type: SET_FETCHING, isFetching});
-
-type SetIsStatusUpdatingAction = {
-    type: typeof SET_IS_STATUS_UPDATING
-    isUpdating: boolean
-}
-export const setIsStatusUpdating = (isUpdating: boolean):SetIsStatusUpdatingAction => ({type: SET_IS_STATUS_UPDATING, isUpdating});
-
-export const getProfileThunk = (userId: number) => {
-    return (dispatch: any) => {
+export const getProfileThunk = (userId: number | null): ThunkActionType => {
+    return (dispatch) => {
         ProfileAPI.getProfile(userId).then((data: any) => {
-            dispatch(getProfile(data));
-            dispatch(setIsFetching(false));
+            dispatch(ProfileActions.getProfile(data));
+            dispatch(ProfileActions.setIsFetching(false));
         })
     }
 };
 
-export const uploadProfilePhotoThunk = (photo: any) => {
-    return (dispatch: any) => {
+export const uploadProfilePhotoThunk = (photo: any): ThunkActionType => {
+    return (dispatch) => {
         ProfileAPI.uploadPhoto(photo).then((data: any) => {
-        if(data.resultCode === 0) {
-            dispatch(updateProfilePhoto(data.data.photos.large));
-        }
-       })
+            if (data.resultCode === 0) {
+                dispatch(ProfileActions.updateProfilePhoto(data.data.photos.large));
+            }
+        })
     }
 };
 
 
-export const getProfileStatus = (userId: number) => {
-    return (dispatch: any) => {
-        ProfileAPI.getProfileStatus(userId).then((data: any) => {
-            dispatch(setProfileStatus(data));
+export const getProfileStatus = (userId: number): ThunkActionType => {
+    return (dispatch) => {
+        ProfileAPI.getProfileStatus(userId).then((data) => {
+            dispatch(ProfileActions.setProfileStatus(data));
 
         })
     }
 };
 
-export const updateProfileStatus = (status: string) => {
-    return (dispatch: any) => {
-        dispatch(setIsStatusUpdating(true));
-        ProfileAPI.updateProfileStatus(status).then((data: any) => {
-            if(!data.resultCode) {
-                dispatch(setProfileStatus(status));
-                dispatch(setIsStatusUpdating(false));
-            }else {
-                dispatch(setIsStatusUpdating(false));
+export const updateProfileStatus = (status: string): ThunkActionType => {
+    return (dispatch) => {
+        dispatch(ProfileActions.setIsStatusUpdating(true));
+        ProfileAPI.updateProfileStatus(status).then((data) => {
+            if (!data.resultCode) {
+                dispatch(ProfileActions.setProfileStatus(status));
+                dispatch(ProfileActions.setIsStatusUpdating(false));
+            } else {
+                dispatch(ProfileActions.setIsStatusUpdating(false));
                 return false;
             }
 
@@ -196,26 +176,26 @@ export const updateProfileStatus = (status: string) => {
     }
 };
 
-export const updateProfileInfo = (info: ProfileType) => {
-    return async (dispatch: any, getState: any) => {
+export const updateProfileInfo = (info: ProfileType): ThunkActionType => {
+    return async (dispatch: any, getState) => {
         const userId = getState().auth.id;
-        dispatch(setIsFetching(true));
+        dispatch(ProfileActions.setIsFetching(true));
 
         let response = await ProfileAPI.updateInfo(info);
-            if(response.resultCode === 0) {
-                dispatch(setIsFetching(false));
-                dispatch(setEditMode(false));
-                dispatch(getProfileThunk(userId));
+        if (response.resultCode === ResultCodeMessage.Success) {
+            dispatch(ProfileActions.setIsFetching(false));
+            dispatch(ProfileActions.setEditMode(false));
+            dispatch(getProfileThunk(userId));
 
-            }else {
-                dispatch(setIsFetching(false));
-                dispatch(stopSubmit( "profileInfoForm", {_error: response.messages[0]} ));
-            }
+        } else {
+            dispatch(ProfileActions.setIsFetching(false));
+            dispatch(stopSubmit("profileInfoForm", {_error: response.messages[0]}));
+        }
 
 
     }
 };
-export const clearFrom = () => {
+export const clearFrom = (): ThunkActionType => {
     return (dispatch: any) => {
         dispatch(reset('newpostForm'));
     }

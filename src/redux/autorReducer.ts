@@ -1,13 +1,14 @@
-import {AuthApi, SecureApi} from "../api/api";
+import {AuthApi, ResultCodeCaptcha, ResultCodeMessage, SecureApi} from "../api/api";
 import {stopSubmit} from "redux-form"
-import {Redirect} from "react-router-dom";
 import {REDIRECT_TO_PROFILE, SET_AUTORIZED, SET_CAPTCHA_URL} from "./constants";
+import {ThunkAction} from "redux-thunk";
+import {StateType, TypesFromObj} from "./reduxStore";
 
 
 
 let initialState = {
     isAutorized: false,
-    id: null as string | null,
+    id: null as number | null,
     login: null as string | null,
     email: null as string | null,
     isFetching: false,
@@ -16,20 +17,10 @@ let initialState = {
 }
 type InitialType = typeof initialState;
 
-type ActionTypeAuth = {
-    type: typeof SET_AUTORIZED
-    data: { id: string | null, login: string | null, email: string | null}
-}
-type ActionTypeCaptcha = {
-    type: typeof SET_CAPTCHA_URL
 
-    captcha: string
-}
-type ActionRedirect = {
-    type: typeof REDIRECT_TO_PROFILE;
-}
+type MainActionType = TypesFromObj<typeof AuthorActions>
 
-let autorizeReducer = (state = initialState, action: ActionTypeAuth | ActionTypeCaptcha | ActionRedirect): InitialType => {
+let autorizeReducer = (state = initialState, action: MainActionType): InitialType => {
         switch(action.type){
             case SET_AUTORIZED:{
                 let Author;
@@ -57,29 +48,35 @@ let autorizeReducer = (state = initialState, action: ActionTypeAuth | ActionType
         }
 }
 
-export const autorize = (id: number, login: string, email: string) => ({type: SET_AUTORIZED, data: {id, login, email}});
-export const setCaptchaUrl = (captcha: string) => ({type: SET_CAPTCHA_URL, captcha});
-export const redirectToProfile = () => ({type: REDIRECT_TO_PROFILE})
+export const AuthorActions = {
+    autorize: (id: number, login: string, email: string) => ({type: SET_AUTORIZED, data: {id, login, email}} as const),
+    setCaptchaUrl: (captcha: string) => ({type: SET_CAPTCHA_URL, captcha} as const),
+    redirectToProfile: () => ({type: REDIRECT_TO_PROFILE} as const)
+}
+
+
 export default autorizeReducer;
 
-export const AutorizedThunk = () => {
-    return  async (dispatch: any) => {
+type ThunkType = ThunkAction<void, StateType, unknown, MainActionType>;
+
+export const AutorizedThunk = (): ThunkAction<Promise<void>, StateType, unknown, MainActionType>  => {
+    return  async (dispatch) => {
        try{ let data = await AuthApi.getAuthorized()
         let someData = data.data;
-         dispatch(autorize(someData.id, someData.login, someData.email));}catch (error) {
+         dispatch(AuthorActions.autorize(someData.id, someData.login, someData.email));}catch (error) {
            console.log(error);
        }
     }
 
 };
-export const LogIn = (email: string,password: string,rememberMe=false, captcha: boolean | null = null) => {
-    return (dispatch: any): void => {
-        AuthApi.login(email,password,rememberMe, captcha).then((response: any) => {
-            if (response.data.resultCode === 0) {
+export const LogIn = (email: string,password: string,rememberMe=false, captcha: boolean | null = null): ThunkType => {
+    return (dispatch)=> {
+        AuthApi.login(email,password,rememberMe, captcha).then((response) => {
+            if (response.data.resultCode === ResultCodeMessage.Success) {
                 dispatch(AutorizedThunk());
-                dispatch(redirectToProfile());
+                dispatch(AuthorActions.redirectToProfile());
             }else {
-                if(response.data.resultCode === 10) {
+                if(response.data.resultCode === ResultCodeCaptcha.CaptchaRequired) {
                     dispatch(GetCaptchaUrl());
                 }
                 dispatch(stopSubmit( "loginform", {_error: response.data.messages} ));
@@ -88,20 +85,20 @@ export const LogIn = (email: string,password: string,rememberMe=false, captcha: 
 
 };
 
-export const LogOut = () => {
-    return (dispatch: any) => {
-        AuthApi.logout().then((response: any) => {
-            if (response.data.resultCode === 0) {
+export const LogOut = (): ThunkType => {
+    return (dispatch) => {
+        AuthApi.logout().then((response) => {
+            if (response.data.resultCode === ResultCodeMessage.Success) {
                 dispatch(AutorizedThunk());
             }
         })}
 
 };
 
-export const GetCaptchaUrl = () => {
-    return (dispatch: any) => {
-        SecureApi.getGaptcha().then((data: any) => {
-           dispatch(setCaptchaUrl(data.url));
+export const GetCaptchaUrl = (): ThunkType => {
+    return (dispatch) => {
+        SecureApi.getGaptcha().then((data) => {
+           dispatch(AuthorActions.setCaptchaUrl(data.url));
         })}
 
 };
