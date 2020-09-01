@@ -1,8 +1,8 @@
-# Social Network was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
+# Social Network was bootstrapped with Create React App.
 ## Authorization
 Login: free@samuraijs.com
 Password: free
+# Test it out [Social Network](https://jacygames.github.io/SocialNetwork-Samurai/#/).
 
 ## Features and opportunities
 
