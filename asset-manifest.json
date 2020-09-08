@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/SocialNetwork-Samurai/static/css/main.afd16212.chunk.css",
-    "main.js": "/SocialNetwork-Samurai/static/js/main.6b43ede5.chunk.js",
-    "main.js.map": "/SocialNetwork-Samurai/static/js/main.6b43ede5.chunk.js.map",
+    "main.css": "/SocialNetwork-Samurai/static/css/main.dd17de58.chunk.css",
+    "main.js": "/SocialNetwork-Samurai/static/js/main.8f495c13.chunk.js",
+    "main.js.map": "/SocialNetwork-Samurai/static/js/main.8f495c13.chunk.js.map",
     "runtime-main.js": "/SocialNetwork-Samurai/static/js/runtime-main.f917dcc9.js",
     "runtime-main.js.map": "/SocialNetwork-Samurai/static/js/runtime-main.f917dcc9.js.map",
-    "static/js/2.bcc138ec.chunk.js": "/SocialNetwork-Samurai/static/js/2.bcc138ec.chunk.js",
-    "static/js/2.bcc138ec.chunk.js.map": "/SocialNetwork-Samurai/static/js/2.bcc138ec.chunk.js.map",
+    "static/js/2.908cab7a.chunk.js": "/SocialNetwork-Samurai/static/js/2.908cab7a.chunk.js",
+    "static/js/2.908cab7a.chunk.js.map": "/SocialNetwork-Samurai/static/js/2.908cab7a.chunk.js.map",
     "index.html": "/SocialNetwork-Samurai/index.html",
-    "precache-manifest.e5b2521f9c11d6c7118f0ab4711548d8.js": "/SocialNetwork-Samurai/precache-manifest.e5b2521f9c11d6c7118f0ab4711548d8.js",
+    "precache-manifest.97fb3e4f3121e473d891a0ddbc262271.js": "/SocialNetwork-Samurai/precache-manifest.97fb3e4f3121e473d891a0ddbc262271.js",
     "service-worker.js": "/SocialNetwork-Samurai/service-worker.js",
-    "static/css/main.afd16212.chunk.css.map": "/SocialNetwork-Samurai/static/css/main.afd16212.chunk.css.map",
-    "static/js/2.bcc138ec.chunk.js.LICENSE.txt": "/SocialNetwork-Samurai/static/js/2.bcc138ec.chunk.js.LICENSE.txt",
+    "static/css/main.dd17de58.chunk.css.map": "/SocialNetwork-Samurai/static/css/main.dd17de58.chunk.css.map",
+    "static/js/2.908cab7a.chunk.js.LICENSE.txt": "/SocialNetwork-Samurai/static/js/2.908cab7a.chunk.js.LICENSE.txt",
     "static/media/Logo.png": "/SocialNetwork-Samurai/static/media/Logo.fe672064.png",
     "static/media/profilePic.jpg": "/SocialNetwork-Samurai/static/media/profilePic.fb6f99f7.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.f917dcc9.js",
-    "static/js/2.bcc138ec.chunk.js",
-    "static/css/main.afd16212.chunk.css",
-    "static/js/main.6b43ede5.chunk.js"
+    "static/js/2.908cab7a.chunk.js",
+    "static/css/main.dd17de58.chunk.css",
+    "static/js/main.8f495c13.chunk.js"
   ]
 }
