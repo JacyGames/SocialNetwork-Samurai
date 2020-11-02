@@ -65,14 +65,11 @@ class ProfileAPI extends React.PureComponent<MapStateType & MapDispatchType & Ow
         if (!userId) {
             userId = this.props.loginedId;
         }
-        console.log("user ID is ",userId)
         if(userId){
             this.props.getProfileThunk(parseInt(userId));
             this.props.getProfileStatus(parseInt(userId));
         }
     }
-
-
     componentDidMount() {
         if (!this.props.profile && !this.props.isUpdating) {
             this.updateProfile();
@@ -94,7 +91,6 @@ class ProfileAPI extends React.PureComponent<MapStateType & MapDispatchType & Ow
 
 
     render() {
-        console.log("logined ID", this.props.loginedId);
         return <Profile {...this.props}
                         isProfileOwner={!this.props.match.params.userId}
                         profile={this.props.profile} status={this.props.status}
