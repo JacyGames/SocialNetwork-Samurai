@@ -1,15 +1,16 @@
 import {ProfileAPI, ResultCodeMessage} from "../api/api";
-import {stopSubmit} from "redux-form";
-import {reset} from "redux-form";
+import {reset, stopSubmit} from "redux-form";
 import {
-    UPDATE_PHOTO,
+    ADD_POST,
+    DELETE_POST,
+    GET_PROFILE,
     SET_EDIT_MODE,
     SET_FETCHING,
     SET_IS_STATUS_UPDATING,
-    GET_PROFILE,
-    DELETE_POST,
+    SET_IS_UPDATING,
+    SET_OWN_PROFILE_ID,
     SET_PROFILE_STATUS,
-    ADD_POST
+    UPDATE_PHOTO
 } from "./constants"
 import {ThunkAction} from "redux-thunk";
 import {StateType, TypesFromObj} from "./reduxStore";
@@ -51,6 +52,7 @@ type InitialStateType = {
     editMode: boolean
     isFetchingProfile: boolean
     updatingStatus: boolean
+    setIsUpdating: boolean
 }
 
 
@@ -66,7 +68,8 @@ let initialState: InitialStateType = {
     status: "",
     editMode: false,
     isFetchingProfile: false,
-    updatingStatus: false
+    updatingStatus: false,
+    setIsUpdating: false
 };
 
 type MainActionType = TypesFromObj<typeof ProfileActions>
@@ -109,6 +112,9 @@ let profileReducer = (state = initialState, action: MainActionType): InitialStat
         case DELETE_POST: {
             return {...state, data: state.data.filter(post => post.id !== action.id)};
         }
+        case SET_IS_UPDATING: {
+            return {...state, setIsUpdating: action.status}
+        }
 
         default:
             return state;
@@ -123,7 +129,8 @@ export const ProfileActions = {
     updateProfilePhoto: (photo: any) => ({type: UPDATE_PHOTO, photo} as const),
     setEditMode: (editMode: boolean) => ({type: SET_EDIT_MODE, editMode} as const),
     setIsFetching: (isFetching: boolean) => ({type: SET_FETCHING, isFetching} as const),
-    setIsStatusUpdating: (isUpdating: boolean) => ({type: SET_IS_STATUS_UPDATING,isUpdating} as const)
+    setIsStatusUpdating: (isUpdating: boolean) => ({type: SET_IS_STATUS_UPDATING,isUpdating} as const),
+    setIsUpdating: (status: boolean) => ({type: SET_IS_UPDATING, status} as const)
 }
 export const addPostForEnv = ProfileActions.addPostActionCreator;
 
@@ -132,10 +139,12 @@ type ThunkActionType = ThunkAction<void, StateType, unknown, MainActionType>;
 
 
 export const getProfileThunk = (userId: number | null): ThunkActionType => {
+
     return (dispatch) => {
-        ProfileAPI.getProfile(userId).then((data: any) => {
+        dispatch(ProfileActions.setIsUpdating(true));
+        ProfileAPI.getProfile(userId).then((data) => {
             dispatch(ProfileActions.getProfile(data));
-            dispatch(ProfileActions.setIsFetching(false));
+            dispatch(ProfileActions.setIsUpdating(false));
         })
     }
 };

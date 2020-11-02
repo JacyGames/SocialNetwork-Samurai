@@ -6,7 +6,7 @@ import {
     UsersActions,
     followThunk, getUsersAnotherPageThunk,
     getUsersThunk,
-    unfollowThunk
+    unfollowThunk, InitialUsersType
 } from "../../redux/usersReducer";
 import {withAuthRedirect} from "../../Hok/wihtAuthRedirect";
 import {compose} from "redux";
@@ -27,7 +27,7 @@ type MapDispatchType = {
     followThunk: any
 }
 type MapStateType = {
-    users: any
+    users: InitialUsersType
 }
 type OwnPropsType = {
 
@@ -54,8 +54,10 @@ class UsersAPI extends React.Component<MapDispatchType & MapStateType & OwnProps
     }
 
     componentDidMount() {
+        if(!this.props.users.users.length){
+            this.props.getUsersThunk(this.props.users.currentPage,this.props.users.itemsOnPage);
+        }
 
-        this.props.getUsersThunk(this.props.users.currentPage,this.props.users.itemsOnPage);
 
     }
 

@@ -1,18 +1,24 @@
+body {
+  background-color: #76b955;
+}
+
 ul li {
   list-style-type: georgian;
 }
+
 
 .app-wrapper {
   display: grid;
   width: 1200px;
   margin: 0 auto;
+  min-height: 600px;
 
   grid-template-areas:
   "h h"
   "n c";
 
   grid-template-rows: 60px 1fr;
-  grid-template-colums: 2fr 10fr;
+  grid-template-columns: 315px 1fr;
   /*grid-gap: 10px;*/
 
 }

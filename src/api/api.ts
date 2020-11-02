@@ -32,6 +32,13 @@ type MainResponse = {
 export const UsersAPI = {
     getUsers(currentPage: number, itemsOnPage: number) {
         return instance.get<GetUsersType>(`users?page=${currentPage}&count=${itemsOnPage}`)
+            .then(response => response.data);
+    },
+    search(term: string) {
+        return instance.get<GetUsersType>(`users?term=${term}`).then(response => response.data)
+    },
+    getFriends(currentPage: number, itemsOnPage: number) {
+        return instance.get<GetUsersType>(`users?page=${currentPage}&count=${itemsOnPage}&friend=true`)
             .then(response => response.data) ;
     },
     followAPI(id: number) {
@@ -41,9 +48,12 @@ export const UsersAPI = {
         return instance.delete<MainResponse>(`follow/${id}`).then(response => response.data);
     }
 }
+type PhotosData = {
+    photos: {small: string, large: string}
+}
 
 type UploadPhotoType = {
-    data: {small: string, large: string}
+    data: PhotosData
     resultCode: ResultCodeMessage
     messages: Array<string>
 }

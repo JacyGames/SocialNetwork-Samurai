@@ -3,9 +3,10 @@ import classes from "./userStyle.module.css"
 import userImg from "../../images/user.png";
 import {NavLink} from "react-router-dom";
 import {Paginator} from "../common/paginator/Paginator";
+import {InitialUsersType, UserType} from "../../redux/usersReducer";
 
 type UsersType = {
-    users: any
+    users: InitialUsersType
     pageChanged: any
     isFollowing: any
     unfollowThunk: any
@@ -28,7 +29,7 @@ const Users: React.FC<UsersType> = (props) => {
 
         {
 
-            props.users.users.map((u: any) => <div key={key++} className={classes.user}>
+            props.users.users.map((u: UserType) => <div key={key++} className={classes.user}>
                 <div className={classes.ava}>
                     <NavLink to={'/Profile/' + u.id}> <img className={classes.image}
                                                            src={u.photos.small != null ? u.photos.small : userImg}
@@ -50,12 +51,9 @@ const Users: React.FC<UsersType> = (props) => {
                 <div className={classes.info}>
                     <div className={classes.name}>
                         <div>{u.name}</div>
-                        <div>{u.status}</div>
+                        <div>{u.status || "Status missing"}</div>
                     </div>
-                    <div className={classes.location}>
-                        <div>{"u.location.country"}</div>
-                        <div>{"u.location.city"}</div>
-                    </div>
+
                 </div>
 
             </div>)}

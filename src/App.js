@@ -14,6 +14,8 @@ import {connect} from "react-redux";
 import {initalizedThunk} from "./redux/appReducer";
 import Loader from "./components/common/loadingProgress/loading";
 import {compose} from "redux";
+import FriendsContainer from "./components/friends/FriendsContainer";
+import SearchContainerConnected from "./components/Search/SearchContainer";
 
 
 class App extends React.Component {
@@ -39,7 +41,8 @@ class App extends React.Component {
                         <Route path="/Dialogs" render={() => <DialogsContainer/>}/>
                         <Route path="/Profile/:userId?" render={() => <ProfileContainer/>}/>
                         <Route path="/Users" render={() => <UsersContainer/>}/>
-                        <Route path="/Music" component={Music}/>
+                        <Route path="/Search" render={() => <SearchContainerConnected/>}/>
+                        <Route path="/Friends" component={FriendsContainer}/>
                         <Route path="/News" component={News}/>
                         <Route path="/Settings" component={Settings}/>
                         <Route path="/Login" render={() => <Login/>}/>

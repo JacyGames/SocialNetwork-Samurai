@@ -29,15 +29,7 @@
     width: 100%;
     text-align: center;
 }
-.location {
-    position: absolute;
-    right: 0;
-    top: 0;
-    font-weight: 700;
-    color: #ffffff;
-    margin-top: 10px;
-    margin-right: 10px;
-}
+
 .name {
     font-weight: 700;
     color: #ffffff;
@@ -112,4 +104,8 @@
     color: #ffffff;
     background-color: #314f2d;
 
+}
+.paginatorSmall {
+    display: flex;
+   justify-content: center;
 }

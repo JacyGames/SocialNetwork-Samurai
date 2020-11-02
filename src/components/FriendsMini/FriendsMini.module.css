@@ -1,0 +1,33 @@
+.friendsMiniWrap {
+    border: 1px solid black;
+    width: 270px;
+    height: 400px;
+    margin-top: 20px;
+}
+.friendsMinTitle {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-size: 20px;
+}
+.friendsMiniItem {
+    padding: 5px 10px;
+    height: 50px;
+    width: 250px;
+    display: flex;
+    align-items: center;
+}
+.friendsMiniItemImg {
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+}
+.friendsMiniItemName {
+    margin-left: 15px;
+    font-weight: bold;
+
+    color: white;
+}
+.friendsLink {
+    text-decoration: none;
+}

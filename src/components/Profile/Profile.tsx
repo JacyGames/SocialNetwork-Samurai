@@ -9,9 +9,15 @@ import FetchingInProgress from "../common/loadingProgress/fetchingLoader";
 import ProfileChangeInfoFormWithProps, {PropsInfoChangeType, PropsSubmitProfile} from "../Forms/ProfileChangeInfoForm";
 import {ProfileType} from "../../redux/profileReducer";
 import {FormSubmitHandler} from "redux-form";
+import {UserType} from "../../redux/usersReducer";
 
 type PropsProfileType = {
+    friends: Array<UserType>
+    users: Array<UserType>
+    miniFriends: Array<UserType>
+    searchedUsers: Array<UserType>
     profile: ProfileType | null
+    isFollowing: Array<number>
     uploadProfilePhotoThunk: any
     isProfileOwner: boolean
     editMode: boolean
@@ -21,12 +27,25 @@ type PropsProfileType = {
     isFetchingProfile: boolean
     setEditMode: any
     updateProfileInfo: any
+    isUpdating: boolean
+    follow: any
+    unfollow: any
+    match: {
+        isExact: boolean
+        params: {
+            userId: any
+        }
+        path: string
+        url: string
+    }
 }
 
 const Profile: React.FC<PropsProfileType> = (props) => {
 
-
     if (!props.profile) {
+        return <Loader/>
+    }
+    if (props.isUpdating) {
         return <Loader/>
     }
     let contacts = Object.entries(props.profile.contacts);
@@ -35,6 +54,7 @@ const Profile: React.FC<PropsProfileType> = (props) => {
             props.uploadProfilePhotoThunk(e.target.files[0]);
         }
     }
+    let allUsers = [...props.miniFriends, ...props.users, ...props.friends, ...props.searchedUsers];
 
     return <div>
         <div className={classes.profile__conatiner}>
@@ -44,7 +64,24 @@ const Profile: React.FC<PropsProfileType> = (props) => {
                     props.isProfileOwner && <input className={classes.inputFile} onChange={photoChange} type="file"/>
                 }
                 <div className={classes.profile__status}>
-                    <ProfileStatusHook updatingStatus={props.updatingStatus} status={props.status} updateProfileStatus={props.updateProfileStatus}/>
+                    <ProfileStatusHook isProfileOwner={props.isProfileOwner} updatingStatus={props.updatingStatus}
+                                       status={props.status} updateProfileStatus={props.updateProfileStatus}/>
+                    {!props.isProfileOwner && <div>
+                        {allUsers.some((friend) => friend.id === parseInt(props.match.params.userId) && friend.followed) ?
+                            <button onClick={() => {
+                                props.unfollow(props.match.params.userId)
+                            }}
+                                    disabled={props.isFollowing.some((id) => id === props.match.params.userId)}>Unfollow
+                            </button> : <button onClick={() => {
+                                props.follow(props.match.params.userId)
+                            }}
+                                                disabled={props.isFollowing.some((id) => id === props.match.params.userId)}>Follow
+                            </button>
+
+                        }
+
+
+                    </div>}
                 </div>
             </div>
             {!props.editMode && !props.isFetchingProfile ? <ProfileInformation profile={props.profile}

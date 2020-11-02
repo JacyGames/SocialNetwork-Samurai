@@ -6,6 +6,7 @@ type HookType = {
     status: string | null
     updateProfileStatus: any
     updatingStatus: boolean
+    isProfileOwner: boolean
 
 }
 
@@ -15,7 +16,10 @@ const ProfileStatusHook: React.FC<HookType> = (props) => {
    let [status, editStatus] = useState(props.status);
 
    let activateEditMode = () => {
-       setEditMode(true);
+       if(props.isProfileOwner){
+           setEditMode(true);
+       }
+
    }
 
     let deactivateEditMode = () => {

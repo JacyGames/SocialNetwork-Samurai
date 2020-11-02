@@ -17,7 +17,7 @@ type PropsType = {
 const Dialogs: React.FC<PropsType> = (props) => {
     let key = 0;
 
-    let SendMessage = (value: any) => {
+    let SendMessage = (value: { message: string }) => {
         props.sendMessageActionCreator(value.message);
         props.clearMessageFrom();
     }
