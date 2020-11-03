@@ -1,9 +1,8 @@
 import React from "react";
-import classes from "./Header.module.css";
 import Header from "./Header";
 import {AutorizedThunk, LogOut} from "../../redux/autorReducer";
 import {connect} from "react-redux";
-import {getAuthEmail, getAuthLogin, getIsAutorized, getIsFetching, getLoginedId} from "../../redux/selectors/Selector";
+import {getAuthEmail, getAuthLogin, getIsAutorized, getLoginedId} from "../../redux/selectors/Selector";
 import {StateType} from "../../redux/reduxStore";
 
 type PropsTypeOwn = {
@@ -14,7 +13,6 @@ type MapStateType = {
     id: number | null,
     login: string | null,
     email: string | null,
-    isFetching: boolean
 }
 type MapDispatchType = {
     AutorizedThunk: () => void
@@ -25,11 +23,11 @@ type MapDispatchType = {
 class HeaderContainer extends React.Component<PropsTypeOwn & MapStateType & MapDispatchType> {
 
     componentDidMount() {
-    this.props.AutorizedThunk();
+        this.props.AutorizedThunk();
     }
 
     render() {
-        return  <Header login={this.props.login} isAutorized={this.props.isAutorized} LogOut={this.props.LogOut} />
+        return <Header login={this.props.login} isAutorized={this.props.isAutorized} LogOut={this.props.LogOut}/>
     }
 }
 
@@ -38,7 +36,6 @@ let mapStateToProps = (state: StateType): MapStateType => ({
     id: getLoginedId(state),
     login: getAuthLogin(state),
     email: getAuthEmail(state),
-    isFetching: getIsFetching(state)
 });
 
 

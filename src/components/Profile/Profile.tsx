@@ -130,7 +130,7 @@ const ProfileInformation: React.FC<ProfileInformationType> = (props) => {
 
             }
             {props.contacts.map((element: any) => {
-                if (!element[1]) return;
+                if (!element[1]) return null;
                 return <ProfileLinks key={key++} text={`My ${element[0]}`} link={element[1]} socialName={element[0]}/>
             })}
         </div>

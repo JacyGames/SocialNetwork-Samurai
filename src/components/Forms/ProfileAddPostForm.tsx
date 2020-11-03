@@ -1,7 +1,7 @@
-import React, {Props} from "react";
+import React from "react";
 import {Field, reduxForm} from "redux-form";
 import classes from "./ProfileAddPostForm.module.css"
-import {maxlenght, required} from "../common/validation/validator";
+import {maxlenght} from "../common/validation/validator";
 import {TextArea} from "../common/CustomHTML/ValidateInput";
 
 type PropsType = {

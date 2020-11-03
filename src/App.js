@@ -1,8 +1,7 @@
 import React from 'react';
 import './App.css';
 import Nav from "./components/Navbar/Navbar";
-import {BrowserRouter, Redirect, Route, Switch, withRouter} from "react-router-dom";
-import Music from "./components/Music/Music";
+import {Redirect, Route, Switch, withRouter} from "react-router-dom";
 import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
@@ -12,7 +11,6 @@ import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
 import {connect} from "react-redux";
 import {initalizedThunk} from "./redux/appReducer";
-import Loader from "./components/common/loadingProgress/loading";
 import {compose} from "redux";
 import FriendsContainer from "./components/friends/FriendsContainer";
 import SearchContainerConnected from "./components/Search/SearchContainer";
@@ -21,16 +19,10 @@ import SearchContainerConnected from "./components/Search/SearchContainer";
 class App extends React.Component {
     componentDidMount() {
         this.props.initalizedThunk();
-
     }
 
     render() {
-        // if (!this.props.initialized) {
-        //     return <Loader/>
-        // }
-
         return (
-
             <div className='app-wrapper'>
                 <HeaderContainer/>
                 <Nav/>
@@ -48,8 +40,6 @@ class App extends React.Component {
                         <Route path="/Login" render={() => <Login/>}/>
                     </Switch>
                 </div>
-
-
             </div>
         );
     }

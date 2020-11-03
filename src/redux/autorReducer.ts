@@ -1,6 +1,12 @@
 import {AuthApi, ResultCodeCaptcha, ResultCodeMessage, SecureApi} from "../api/api";
 import {stopSubmit} from "redux-form"
-import {REDIRECT_TO_PROFILE, SET_AUTORIZED, SET_CAPTCHA_URL, SET_IS_AUTHORIZED} from "./constants";
+import {
+    REDIRECT_TO_PROFILE,
+    SET_AUTORIZED,
+    SET_CAPTCHA_URL,
+    SET_IS_AUTHORIZE_FETCH,
+    SET_IS_AUTHORIZED
+} from "./constants";
 import {ThunkAction} from "redux-thunk";
 import {StateType, TypesFromObj} from "./reduxStore";
 
@@ -45,6 +51,12 @@ let autorizeReducer = (state = initialState, action: MainActionType): InitialTyp
                     redirectToProfile: true
                 }
             }
+            case SET_IS_AUTHORIZE_FETCH:{
+                return {
+                    ...state,
+                    isFetching: action.state
+                }
+            }
             default: return state
         }
 }
@@ -53,7 +65,8 @@ export const AuthorActions = {
     autorize: (id: number, login: string, email: string) => ({type: SET_AUTORIZED, data: {id, login, email}} as const),
     setCaptchaUrl: (captcha: string) => ({type: SET_CAPTCHA_URL, captcha} as const),
     redirectToProfile: () => ({type: REDIRECT_TO_PROFILE} as const),
-    setIsAuthorized: (auth: boolean) => ({type: SET_IS_AUTHORIZED, auth} as const)
+    setIsAuthorized: (auth: boolean) => ({type: SET_IS_AUTHORIZED, auth} as const),
+    setIsAuthFetching: (state: boolean) => ({type: SET_IS_AUTHORIZE_FETCH, state} as const)
 }
 
 
@@ -63,13 +76,15 @@ type ThunkType = ThunkAction<void, StateType, unknown, MainActionType>;
 
 export const AutorizedThunk = (): ThunkAction<Promise<void>, StateType, unknown, MainActionType>  => {
     return  async (dispatch) => {
+        dispatch(AuthorActions.setIsAuthFetching(true));
        try{ let data = await AuthApi.getAuthorized()
         let someData = data.data;
            dispatch(AuthorActions.setIsAuthorized(true));
          dispatch(AuthorActions.autorize(someData.id, someData.login, someData.email));
-
+           dispatch(AuthorActions.setIsAuthFetching(false));
        }catch (error) {
            console.log(error);
+           dispatch(AuthorActions.setIsAuthFetching(false));
        }
     }
 

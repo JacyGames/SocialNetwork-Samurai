@@ -28,7 +28,7 @@ let LoginForm: React.FC<PropsType & InjectedFormProps<SubmittingPropsType, Props
             </div>
             <div className={classes.error}>{props.error}</div>
             {props.captchaUrl && <div>
-                <img src={props.captchaUrl}/>
+                <img src={props.captchaUrl} alt=""/>
                 <Field name={"captcha"} component={Inputmine} validate={[required]} placeholder={"text from image"} />
             </div> }
             <div><button>Submit</button></div>

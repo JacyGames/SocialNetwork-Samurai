@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import classes from "../../Users/userStyle.module.css";
+import cn from "classnames";
 
 type PropsType = {
     totalCount: number
@@ -28,16 +29,14 @@ export const Paginator: React.FC<PropsType> = ({
         rightEdge = portionLength * currentPortion;
     let key = 0;
 
-
     return <div className={classes.hoverment}>
-
         {currentPortion > 1 && <button className={classes.btnPortions} onClick={() => {
             setCurrentPortion(currentPortion - 1)
         }}> Previous </button>}
         {
             pages.filter(page => page >= leftEdge && page <= rightEdge).map(p => {
                 return <span key={key++}
-                             className={currentPage === p && classes.selected + " " + classes.pages || classes.pages}
+                             className={cn(classes.pages, {[classes.selected]: currentPage === p})}
                              onClick={() => {
                                  pageChanged(p);
                              }}>{p}</span>

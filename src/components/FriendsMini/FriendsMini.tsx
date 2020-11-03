@@ -20,7 +20,7 @@ const FriendsMini: React.FC<Props> = ({friends, totalCount, setPage, isFetching,
         {isFetching ? <LoaderSmall /> : <div>
             {friends.map((friend) =><NavLink key={friend.id} className={c.friendsLink} to={'/Profile/' + friend.id}> <div className={c.friendsMiniItem} key={friend.id}>
 
-                    <img className={c.friendsMiniItemImg} src={friend.photos.small || alternative}/>
+                    <img className={c.friendsMiniItemImg} src={friend.photos.small || alternative} alt=""/>
                     <span className={c.friendsMiniItemName}> {friend.name} </span>
 
 

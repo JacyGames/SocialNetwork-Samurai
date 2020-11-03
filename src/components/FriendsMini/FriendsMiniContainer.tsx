@@ -3,7 +3,7 @@ import FriendsMini from "./FriendsMini";
 import {connect} from "react-redux";
 import {StateType} from "../../redux/reduxStore";
 import {getUsers} from "../../redux/selectors/Selector";
-import {getUsersThunk, ThunkUsersType, UserType} from "../../redux/usersReducer";
+import {getUsersThunk, UserType} from "../../redux/usersReducer";
 
 type StateToPropsType = {
     users: Array<UserType>

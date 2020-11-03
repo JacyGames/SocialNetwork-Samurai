@@ -8,7 +8,6 @@ import {
     SET_FETCHING,
     SET_IS_STATUS_UPDATING,
     SET_IS_UPDATING,
-    SET_OWN_PROFILE_ID,
     SET_PROFILE_STATUS,
     UPDATE_PHOTO
 } from "./constants"

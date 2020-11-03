@@ -7,7 +7,7 @@ import {
     updateProfileStatus,
     uploadProfilePhotoThunk
 } from "../../redux/profileReducer";
-import {Redirect, withRouter} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../Hok/wihtAuthRedirect";
 import {compose} from "redux";
 import {
