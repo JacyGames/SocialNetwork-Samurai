@@ -37,11 +37,11 @@ class FriendsContainer extends React.Component<MapStateProps & MapDispatchProps 
         this.props.getUsersThunk(this.state.currentPage, 10, 'getFriends');
     }
     componentDidUpdate(prevProps: Readonly<MapStateProps & MapDispatchProps & Props>, prevState: Readonly<{currentPage: number}>, snapshot?: any) {
-        if(this.state.currentPage !== prevState.currentPage){
-            this.props.getUsersThunk(this.state.currentPage, 10, 'getFriends');
-        }
-        if(this.props.friends !== prevProps.friends){
-        }
+        // if(this.state.currentPage !== prevState.currentPage){
+        //     this.props.getUsersThunk(this.state.currentPage, 10, 'getFriends');
+        // }
+        // if(this.props.friends !== prevProps.friends){
+        // }
     }
 
     render() {

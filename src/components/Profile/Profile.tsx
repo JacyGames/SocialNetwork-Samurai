@@ -4,12 +4,11 @@ import NewPostContainer from "./NewPost/NewPostContainer";
 import Loader from "../common/loadingProgress/loading";
 import AltProfilePic from "../../images/profilePic.jpg"
 import ProfileStatusHook from "./StatusHook";
-import {ProfileAbout, ProfileLinks} from "./ProfileAbout";
 import FetchingInProgress from "../common/loadingProgress/fetchingLoader";
-import ProfileChangeInfoFormWithProps, {PropsInfoChangeType, PropsSubmitProfile} from "../Forms/ProfileChangeInfoForm";
 import {ProfileType} from "../../redux/profileReducer";
-import {FormSubmitHandler} from "redux-form";
 import {UserType} from "../../redux/usersReducer";
+import {ProfileInformation} from "./ProfileInformation";
+import {ProfileChangeInformation} from "./ProfileChangeInformation";
 
 type PropsProfileType = {
     friends: Array<UserType>
@@ -41,7 +40,6 @@ type PropsProfileType = {
 }
 
 const Profile: React.FC<PropsProfileType> = (props) => {
-
     if (!props.profile) {
         return <Loader/>
     }
@@ -55,7 +53,6 @@ const Profile: React.FC<PropsProfileType> = (props) => {
         }
     }
     let allUsers = [...props.miniFriends, ...props.users, ...props.friends, ...props.searchedUsers];
-
     return <div>
         <div className={classes.profile__conatiner}>
             <div className={classes.profile__image}>
@@ -77,10 +74,7 @@ const Profile: React.FC<PropsProfileType> = (props) => {
                             }}
                                                 disabled={props.isFollowing.some((id) => id === props.match.params.userId)}>Follow
                             </button>
-
                         }
-
-
                     </div>}
                 </div>
             </div>
@@ -92,70 +86,10 @@ const Profile: React.FC<PropsProfileType> = (props) => {
             /> : props.isFetchingProfile ? <FetchingInProgress/> :
                 <ProfileChangeInformation profile={props.profile} setEditMode={props.setEditMode}
                                           updateProfileInfo={props.updateProfileInfo}/>}
-
-
         </div>
         <h2>My posts</h2>
         <NewPostContainer/>
-
     </div>
 }
-
-type ProfileInformationType = {
-    profile: ProfileType
-    setEditMode: any
-    updateProfileInfo?: any
-    isProfileOwner: boolean
-    contacts: any
-    updateProfileStatus: any
-}
-
-const ProfileInformation: React.FC<ProfileInformationType> = (props) => {
-    let key = 0;
-
-    return <div className={classes.profile__info}>
-        {props.isProfileOwner && <div>
-            <button onClick={() => {
-                props.setEditMode(true)
-            }}>Edit
-            </button>
-        </div>}
-        <div className={classes.profile__name}>{props.profile.fullName} </div>
-        <div className={classes.profile__about}>
-            <ProfileAbout text={"About me"} info={props.profile.aboutMe}/>
-            <ProfileAbout text={"In job finding"} info={props.profile.lookingForAJob}/>
-            {
-                props.profile.lookingForAJob && <ProfileAbout text={"How i am looking for a job"}
-                                                              info={props.profile.lookingForAJobDescription}/>
-
-            }
-            {props.contacts.map((element: any) => {
-                if (!element[1]) return null;
-                return <ProfileLinks key={key++} text={`My ${element[0]}`} link={element[1]} socialName={element[0]}/>
-            })}
-        </div>
-    </div>
-}
-type ProfileChangeType = {
-    profile: ProfileType
-    updateProfileInfo: any
-    setEditMode: any
-
-}
-type SubmitHandler = FormSubmitHandler<PropsSubmitProfile, PropsInfoChangeType>
-
-const ProfileChangeInformation: React.FC<ProfileChangeType> = ({profile, updateProfileInfo}) => {
-
-    const submiting: SubmitHandler = (object: any) => {
-        updateProfileInfo(object);
-    }
-
-    return <div>
-
-        <ProfileChangeInfoFormWithProps initialValues={profile} onSubmit={submiting}/>
-
-    </div>
-}
-
 
 export default Profile;

@@ -23,7 +23,7 @@ type MapDispatchType = {
 class HeaderContainer extends React.Component<PropsTypeOwn & MapStateType & MapDispatchType> {
 
     componentDidMount() {
-        this.props.AutorizedThunk();
+        //this.props.AutorizedThunk();
     }
 
     render() {

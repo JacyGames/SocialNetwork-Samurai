@@ -18,7 +18,7 @@ import SearchContainerConnected from "./components/Search/SearchContainer";
 
 class App extends React.Component {
     componentDidMount() {
-        this.props.initalizedThunk();
+       // this.props.initalizedThunk();
     }
 
     render() {

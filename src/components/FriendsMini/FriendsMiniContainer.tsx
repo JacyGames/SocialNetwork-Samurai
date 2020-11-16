@@ -31,9 +31,9 @@ class FriendsMiniContainer extends React.Component<StateToPropsType & DispatchPr
         this.props.getUsersThunk(this.state.currentPage, 6, 'getMiniFriends')
     }
     componentDidUpdate(prevProps: Readonly<StateToPropsType & DispatchPropsType & OwnProps>, prevState: Readonly<{currentPage: number}>, snapshot?: any) {
-        if(this.state.currentPage !== prevState.currentPage){
-            this.props.getUsersThunk(this.state.currentPage, 6, 'getMiniFriends');
-        }
+        // if(this.state.currentPage !== prevState.currentPage){
+        //     this.props.getUsersThunk(this.state.currentPage, 6, 'getMiniFriends');
+        // }
     }
 
     render() {

@@ -12,15 +12,14 @@ type PropsType = {
 
 
 const Header: React.FC<PropsType> = (props) => {
-    return  <header className={classes.header}>
+    return <header className={classes.header}>
         <div className={classes.logoStyle}>
-            <img  src={logo} alt=""/>
+            <img src={logo} alt=""/>
         </div>
-
         <div className={classes.currentUser}>
-            {props.isAutorized ? <div><span className={classes.autorizedName}>{props.login}</span> <button className={classes2.btn} onClick={props.LogOut}>LogOut</button></div> : <NavLink className={classes.author}  to="/login/">Login </NavLink>}
-
-
+            {props.isAutorized ? <div><span className={classes.autorizedName}>{props.login}</span>
+                <button className={classes2.btn} onClick={props.LogOut}>LogOut</button>
+            </div> : <NavLink className={classes.author} to="/login/">Login </NavLink>}
         </div>
     </header>
 }

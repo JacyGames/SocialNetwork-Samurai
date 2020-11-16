@@ -74,22 +74,16 @@ class ProfileAPI extends React.PureComponent<MapStateType & MapDispatchType & Ow
         if (!this.props.profile && !this.props.isUpdating) {
             this.updateProfile();
         }
-
-
     }
-
     componentDidUpdate(prevProps: MapStateType & MapDispatchType & OwnPropsType, prevState: StateType, snapshot: any) {
-        if (this.props.match.params.userId !== undefined && parseInt(this.props.match.params.userId) !== this.props.profile?.userId && !this.props.isUpdating) {
-
-            this.updateProfile();
-        }
-        if (this.props.match.params.userId === undefined && this.props.profile?.userId !== this.props.loginedId && !this.props.isUpdating) {
-            this.updateProfile();
-        }
-
+        // if (this.props.match.params.userId !== undefined && parseInt(this.props.match.params.userId) !== this.props.profile?.userId && !this.props.isUpdating) {
+        //
+        //     this.updateProfile();
+        // }
+        // if (this.props.match.params.userId === undefined && this.props.profile?.userId !== this.props.loginedId && !this.props.isUpdating) {
+        //     this.updateProfile();
+        // }
     }
-
-
     render() {
         return <Profile {...this.props}
                         isProfileOwner={!this.props.match.params.userId}
@@ -111,10 +105,7 @@ class ProfileAPI extends React.PureComponent<MapStateType & MapDispatchType & Ow
                         searchedUsers={this.props.searchedUsers}
         />
     }
-
-
 }
-
 
 let mapStateToProps = (state: StateType): MapStateType => ({
     profile: getProfile(state),
@@ -132,9 +123,7 @@ let mapStateToProps = (state: StateType): MapStateType => ({
     searchedUsers: getUsers(state).searchUsers
 });
 
-
 const setEditModeForConnect = ProfileActions.setEditMode;
-
 
 export default compose(
     connect(mapStateToProps, {
